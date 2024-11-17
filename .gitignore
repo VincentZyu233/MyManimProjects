@@ -1,0 +1,40 @@
+*.mp4
+*.zip
+
+# 忽略所有名为 media 的文件夹
+media/
+
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environments
+myenv*/  
+venv/
+env/
+.env/
+
+# IDE and editor folders
+.vscode/
+.idea/
+.cph/
+
+# macOS and Windows system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Database files
+*.db
+*.sqlite
+
+# Test coverage reports
+.coverage
+
+# Backup and temporary files
+*.bak
+*.tmp

@@ -1,0 +1,4 @@
+myenv*/  
+# 忽略其他类似 myenv 开头的文件夹
+
+# git rm -r --cached myenv*
