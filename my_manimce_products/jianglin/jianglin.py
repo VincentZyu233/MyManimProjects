@@ -7,8 +7,9 @@ class SVGWriteAnimation(Scene):
         self.play(Write(text))
         
         # 加载 SVG 文件
-        logo = SVGMobject("jianglin_logo.svg").scale(10)
-        self.play(Create(logo))
+        logo = SVGMobject("jianglin_logo_whole_pixso.svg").scale(2.5)
+        # self.play(Create(logo), run_time = 10)
+        self.play(Write(logo), run_time = 5)
 
         logo_rect = SurroundingRectangle(logo, color=WHITE)
         self.play(Create(logo_rect))

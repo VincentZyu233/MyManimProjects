@@ -1,5 +1,10 @@
+# too big qwq
 *.mp4
 *.zip
+
+# tmp git diff and log
+/tmp_diff.diff
+tmp_log.txt
 
 # 忽略所有名为 media 的文件夹
 media/
@@ -9,11 +14,15 @@ media/
 *.pyo
 __pycache__/
 
+# Python version
+.python-version
+
 # Virtual environments
 myenv*/  
 venv*/
 env*/
-.env*/
+_myenv*/
+_venv*/
 
 # IDE and editor folders
 .vscode/

@@ -14,6 +14,12 @@ git push -u origin main
 git push --force origin main
 
 
+git diff HEAD README.md
+git diff HEAD README.md > tmp_diff.diff
+git log -p README.md
+git log -p README.md > tmp_log.txt
+
+
 git clean -n -X
 git clean -f -X
 git clean -f -d
@@ -32,7 +38,27 @@ python -m venv venv-name
 source venv-name/bin/activate 
 ```
 
-### manage python versions via scoop(windows)
+#### 本仓库使用的python版本
+> Python 3.10.11
+
+#### 虚拟环境命名规范
+> 用_venv开头，不然太多了根本找不到
+```bash
+(_venv-linux) vincentzyu@vincentzyu:~/Documents/github-repo/MyManimProjects/my_manimce_products$ ls | grep _venv
+_venv-linux
+```
+
+### pip command
+```bash
+pip index versions manim
+pip show manim
+
+pip install -r requirements.txt
+pip freeze > requirements.txt
+
+```
+
+### manage python versions via scoop(Windows)
 ```bash
 scoop list python
 scoop reset python38
@@ -40,7 +66,7 @@ scoop reset python310
 ```
 
 
-### manage python versions via pyenv(linux)
+### manage python versions via pyenv(Linux)
 ```bash
 sudo apt update
 sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
@@ -62,14 +88,12 @@ source ~/.bashrc
 # 或 source ~/.zshrc
 
 
-pyenv install 3.10.0
-pyenv install 3.9.7
+pyenv install 3.10.11
 
 # 切换到指定版本
-pyenv global 3.10.0  # 设置全局 Python 版本
-pyenv local 3.9.7   # 设置当前目录下的 Python 版本
+pyenv global 3.10.11  # 设置全局 Python 版本
+pyenv local 3.10.11   # 设置当前目录下的 Python 版本
 
 pyenv versions
-pyenv which system
 
 ```
