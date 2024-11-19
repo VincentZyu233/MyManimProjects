@@ -1,4 +1,4 @@
-> a repo that backup all my manimce and manimgl projects
+## a repo that backup all my manimce and manimgl projects
 
 ![keep_things_pure_and_joyful](keep_things_pure_and_joyful.png)
 
@@ -23,6 +23,21 @@ git log -p README.md > tmp_log.txt
 git clean -n -X
 git clean -f -X
 git clean -f -d
+```
+
+#### 检查与远程仓库是否同步
+```bash
+git status
+```
+> 会显示与远程仓库同步与否， 如果不同步，会告诉落后了几个commit                                               
+
+> 如果同步，输出内容是这样：
+```bash
+vincentzyu@vincentzyu:~/Documents/github-repo/MyManimProjects$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
 ```
 
 ### python command
