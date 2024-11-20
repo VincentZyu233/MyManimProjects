@@ -13,12 +13,14 @@ manim -pql part1.py ExampleThree
     """
     def construct(self):
         
-        three_image = ImageMobject("./resources/threes/three_1_rasterized.png").scale(15)
+        # three_image = ImageMobject("./resources/threes/three_1_rasterized.png").scale(15)
+        three_image = SVGMobject("./resources/threes/three_1.svg").scale(2).set_z_index(0)
 
+        RECT_EDGE_LEN = max(three_image.width - 0.5, three_image.height - 0.5 )
         three_rect = Rectangle(
-            width = three_image.width + 0.5, height = three_image.height + 0.5,
+            width = RECT_EDGE_LEN, height = RECT_EDGE_LEN,
             color = WHITE, stroke_width = 1
-        )
+        ).set_z_index(100)
 
         three_group = Group(three_image, three_rect)
 
@@ -32,26 +34,28 @@ manim -pql part1.py ExampleThree
     
         self.play(
             FadeIn(three_rect, run_time=2),
-            FadeIn(three_image, run_time=2),
+            Write(three_image, run_time=2),
             lag_ratio=1
         )
         self.wait()
         self.play(
             Succession(
-                FadeIn(brace_top),
-                FadeIn(brace_top_text),
-                lag_ratio=0.5
+                FadeIn(brace_top, run_time=2),
+                FadeIn(brace_top_text, run_time=2),
+                lag_ratio=0.1
             ), 
             Succession(
-                FadeIn(brace_left),
-                FadeIn(brace_left_text),
-                lag_ratio=0.5
+                FadeIn(brace_left, run_time=2),
+                FadeIn(brace_left_text, run_time=2),
+                lag_ratio=0.1
             )
         )
 
+        self.wait()
+
         self.play(
             FadeOut(brace_group),
-            three_group.animate.shift(LEFT*2+UP).scale(0.45)
+            three_group.animate.shift(LEFT*3+UP).scale(0.45)
         )
 
         arrow_1 = Arrow(start=RIGHT, end=LEFT, color=GOLD)
@@ -63,9 +67,46 @@ manim -pql part1.py ExampleThree
         )
         self.play(Create(blue_arrow_right))
 
-        three_text = Text("3").next_to(blue_arrow_right, RIGHT*1.5).scale(2.5)
+        three_text = Text("3").next_to(blue_arrow_right, RIGHT*2).scale(2.5)
         self.play(FadeIn(three_text))
 
+        self.wait()
+
+        brain = SVGMobject("./resources/brain/brain-svgrepo-com.svg")
+        brain.next_to(blue_arrow_right, DOWN*2)
+        self.play(Create(brain), run_time=2)
+
+        how_text = Text("how?!?")
+        how_text.next_to(brain, DOWN)
+        self.play(Write(how_text))
+
         self.wait(2)
-    
+
+        self.play(
+            FadeOut(brain),
+            FadeOut(how_text),
+            lag_ratio = 0.5
+        )
+
+        self.wait(2)
+
+        three_image_2 = SVGMobject("./resources/threes/three_2.svg")
+        three_image_2.next_to(three_text, RIGHT+UP)
+        three_rect_2 = Rectangle(
+            width = RECT_EDGE_LEN, height=RECT_EDGE_LEN,
+            color = WHITE, stroke_width = 1
+        ).set_z_index(100)
+
+        self.play(Write(three_image_2))
+        self.play(FadeIn(three_rect_2))
+
+        self.play(
+            Succession(
+                FadeIn(three_rect_2),
+                Write(three_image_2),
+                lag_ratio=0.5
+            )
+        )
+
+        self.wait(2)
          
