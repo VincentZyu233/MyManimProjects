@@ -1,5 +1,6 @@
 """
 cd /home/vincentzyu/Documents/github-repo/MyManimProjects/my_manimce_products/reproduce_2017_nn_from_3b1b
+cd D:\MANIM\Projects\MyManimProjects\my_manimce_products\reproduce_2017_nn_from_3b1b
 
 manim -pql part1.py 
 
@@ -10,6 +11,8 @@ from manim import *
 class ExampleThree(MovingCameraScene):
     """
 manim -pql part1.py ExampleThree
+manim -pqh part1.py ExampleThree
+
     """
     def construct(self):
         
@@ -91,19 +94,40 @@ manim -pql part1.py ExampleThree
         self.wait(2)
 
         three_image_2 = SVGMobject("./resources/threes/three_2.svg")
-        three_image_2.next_to(three_text, RIGHT+UP)
-        three_rect_2 = Rectangle(
-            width = RECT_EDGE_LEN, height=RECT_EDGE_LEN,
-            color = WHITE, stroke_width = 1
-        ).set_z_index(100)
+        three_image_2.next_to(three_text, RIGHT+UP).scale(0.75)
+        three_rect_2 = SurroundingRectangle(three_image_2, color=WHITE).set_z_index(100)
+        
+        three_image_3 = SVGMobject("./resources/threes/three_3.svg")
+        three_image_3.next_to(three_image_2, DOWN*2).scale(0.75)
+        three_rect_3 = SurroundingRectangle(three_image_3, color=WHITE).set_z_index(100)
+        
+        three_image_4 = SVGMobject("./resources/threes/three_4.svg")
+        three_image_4.next_to(three_image_3, DOWN*2).scale(0.75)
+        three_rect_4 = SurroundingRectangle(three_image_4, color=WHITE).set_z_index(100)
 
-        self.play(Write(three_image_2))
-        self.play(FadeIn(three_rect_2))
+        # self.play(Write(three_image_2))
+        # self.play(FadeIn(three_rect_2))
 
         self.play(
             Succession(
                 FadeIn(three_rect_2),
                 Write(three_image_2),
+                lag_ratio=0.5
+            )
+        )
+        
+        self.play(
+            Succession(
+                FadeIn(three_rect_3),
+                Write(three_image_3),
+                lag_ratio=0.5
+            )
+        )
+        
+        self.play(
+            Succession(
+                FadeIn(three_rect_4),
+                Write(three_image_4),
                 lag_ratio=0.5
             )
         )
