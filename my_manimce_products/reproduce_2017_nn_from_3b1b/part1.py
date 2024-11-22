@@ -133,4 +133,107 @@ manim -pqh part1.py ExampleThree
         )
 
         self.wait(2)
-         
+
+        self.play(
+            FadeOut(blue_arrow_right),
+            FadeOut(three_text),
+            lag_ratio=0.5
+        )
+
+        self.wait()
+
+        three_group.set_z_index(101).set_opacity(0.5)
+        
+        self.play(
+            three_group.animate.move_to(three_image_2.get_center())
+        )
+
+        self.wait()
+
+        self.play(
+            three_group.animate.move_to(three_image_3.get_center())
+        )
+
+        self.play(
+            three_image.animate.shift(LEFT*5),
+            three_rect.animate.set_opacity(0).shift(LEFT*5)
+        )
+
+        self.play(
+            three_image.animate.set_opacity(0).shift(LEFT*5)
+        )
+
+        self.wait(2)
+
+class WriteAProgram(MovingCameraScene):
+    """
+    manim -pql part1.py WriteAProgram
+    manim -pqh part1.py WriteAProgram
+    """
+    def construct(self):
+        
+        three_image = SVGMobject("./resources/threes/three_1.svg").scale(2.5).set_z_index(0).shift(LEFT*2.5)
+
+        RECT_EDGE_LEN = max(three_image.width - 0.5, three_image.height - 0.5 )
+        three_rect = Rectangle(
+            width = RECT_EDGE_LEN, height = RECT_EDGE_LEN,
+            color = WHITE, stroke_width = 1
+        ).set_z_index(100).move_to(three_image.get_center())
+
+        self.play(
+            # Create(three_image),
+            DrawBorderThenFill(three_image),
+            Create(three_rect),
+            lag_ratio=0.5
+        )
+
+        self.wait()
+
+        arrow_right = Arrow(
+            start = three_image.get_center()+RIGHT*2.5, 
+            end = three_image.get_center()+RIGHT*5
+        )        
+        self.play(
+            Create(arrow_right)
+        )
+
+        numbers = VGroup(*[Text(str(i)).scale(0.75) for i in range(10)])
+        
+        # Arrange them vertically with a buffer between each number
+        numbers.arrange(DOWN, buff=0.25).shift(RIGHT*2.5)
+        
+        # Add numbers to the scene
+        self.add(numbers)
+        
+        # Optionally, you can animate them
+        self.play(FadeIn(numbers))
+
+        yellow_rect = SurroundingRectangle(numbers[0], color=YELLOW)
+        self.play(
+            Create(yellow_rect)
+        )
+
+        self.wait()
+        question_mark = Text("?").next_to(yellow_rect, RIGHT)
+        self.play(Write(question_mark))
+        group_rect_question = VGroup(yellow_rect, question_mark)
+
+        self.play(
+            group_rect_question.animate.move_to(numbers[8].get_center()+RIGHT*0.22)
+        )
+        self.wait(0.5)
+        self.play(
+            group_rect_question.animate.move_to(numbers[4].get_center()+RIGHT*0.22)
+        )
+        self.wait(0.5)
+        self.play(
+            group_rect_question.animate.move_to(numbers[0].get_center()+RIGHT*0.22)
+        )
+        self.wait(0.5)
+        self.play(
+            group_rect_question.animate.move_to(numbers[2].get_center()+RIGHT*0.22)
+        )
+        self.wait(0.5)
+        
+
+        self.wait(5)
