@@ -237,3 +237,78 @@ class WriteAProgram(MovingCameraScene):
         
 
         self.wait(5)
+        
+class LayoutPlan(MovingCameraScene):
+    """
+    manim -pql part1.py LayoutPlan
+    manim -pqh part1.py LayoutPlan
+    """
+    def construct(self):
+        text_1 = Text("Machine learning", color=GREEN)
+        text_2 = Text("Neural Network", color=BLUE).next_to(text_1, DOWN)
+        
+        self.play(
+            Write(text_1),
+            Write(text_2),
+            lag_ratio = 0.5
+        )
+        
+        self.wait()
+        
+        self.play(
+            text_1.animate.shift(UP*2+RIGHT*3).scale(5/6),
+            text_2.animate.shift(UP*2+RIGHT*3).scale(5/6),
+        )
+        
+        self.wait()
+        
+        column_counts = [8, 6, 6, 4] # 每列的水平间距
+        column_spacing = 1 # 每个点的垂直间距
+        row_spacing = 0.7
+        
+        dots_group = VGroup()  # 创建所有点
+        for i, count in enumerate(column_counts):
+            column_dots = VGroup(
+                *[
+                    Circle(stroke_color = BLUE, radius = 0.2, fill_color=BLACK, fill_opacity=1, z_index=10).shift(UP * (row_spacing * (count / 2 - j - 0.5)))
+                    for j in range(count)
+                ]
+            )
+            column_dots.shift(RIGHT * (i * column_spacing)) # 移动列的位置
+            dots_group.add(column_dots)
+        
+        dots_group.center().shift(LEFT*4+UP*1) # 居中并添加到场景
+        # self.play(Create(dots_group))
+        
+        self.play(
+            Transform(
+                text_2.copy(),
+                dots_group
+            )
+        )
+        
+        self.wait(2)
+        # 创建所有连接线
+        lines_group = VGroup()
+        for i in range(len(column_counts) - 1):
+            for j in range(column_counts[i]):
+                for k in range(column_counts[i + 1]):
+                    start_dot = dots_group[i][j]
+                    end_dot = dots_group[i + 1][k]
+                    line = Line(
+                        start=start_dot.get_center(),
+                        end=end_dot.get_center(),
+                        stroke_width = 1,
+                        color=WHITE,
+                        z_index=9  # 确保线条在圆之下
+                    )
+                    lines_group.add(line)
+
+        # 添加线条到场景，并创建动画
+        self.play(
+            Create(lines_group),
+            run_time=5
+        )
+
+        
+        self.wait(5)
