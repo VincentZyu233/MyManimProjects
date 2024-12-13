@@ -7,6 +7,7 @@ manim -pql part1.py
 """
 
 from manim import *
+import random
 
 class ExampleThree(MovingCameraScene):
     """
@@ -256,8 +257,8 @@ class LayoutPlan(MovingCameraScene):
         self.wait()
         
         self.play(
-            text_1.animate.shift(UP*2+RIGHT*3).scale(5/6),
-            text_2.animate.shift(UP*2+RIGHT*3).scale(5/6),
+            text_1.animate.shift(UP*2+RIGHT*4).scale(5/6),
+            text_2.animate.shift(UP*2+RIGHT*4).scale(5/6),
         )
         
         self.wait()
@@ -298,7 +299,7 @@ class LayoutPlan(MovingCameraScene):
                     line = Line(
                         start=start_dot.get_center(),
                         end=end_dot.get_center(),
-                        stroke_width = 1,
+                        stroke_width = 2,
                         color=WHITE,
                         z_index=9  # 确保线条在圆之下
                     )
@@ -307,8 +308,44 @@ class LayoutPlan(MovingCameraScene):
         # 添加线条到场景，并创建动画
         self.play(
             Create(lines_group),
+            Create(dots_group),
             run_time=5
         )
+        
+        self.wait()
+        
+        formula = MathTex(r"a_{l+1} = \rho(W_l a_l + b_l)")  # 插入神经网络公式
+        formula.next_to(text_2, DOWN).shift(LEFT)
+        self.play(Write(formula))
+        self.wait()
 
+        bubble = SVGMobject("./resources/bubble/bubble_white.svg").scale(1.5).shift(RIGHT*2+DOWN*2)
+        self.play(Write(bubble))
+        self.wait()
+        
+        why_text = Text("为什么分层？")
+        why_text.move_to(bubble).shift(UP*0.5)
+        self.play(Write(why_text))
+        
+        self.wait()
+        
+        learning_text = Text("Learning 学习", color=YELLOW)
+        learning_text.next_to(dots_group, DOWN*1.5)
+        
+        self.play(Write(learning_text) )
+        
+        self.wait()
+        
+         # 在这里再次遍历所有的直线，给每个直线都设置成黄色，并设置随机透明度
+        yellow_lines_group = VGroup()
+        for line in lines_group:
+            print("line: ", line)
+            new_line = line.copy()  # 复制原线条以便保留原始状态 [ty-reference](7)
+            new_line.set_color(YELLOW)  # 设置颜色为黄色
+            new_line.set_opacity(random.uniform(0.3, 1))  # 设置随机透明度 [ty-reference](8)
+            yellow_lines_group.add(new_line)
+
+        # 使用 Transform 动画将原来的线条转换为新样式的线条
+        self.play(Transform(lines_group, yellow_lines_group), run_time=2)  # [ty-reference](9)
         
         self.wait(5)
